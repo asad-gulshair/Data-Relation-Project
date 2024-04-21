@@ -1,0 +1,118 @@
+
+'title: "5 question"
+author: "asad gulshair"
+date: "2024-02-22"
+output: html_document
+---
+
+# Question No 1:
+## -Is there a relationship between the number of bike rentals and any of the other variables
+
+```{r}
+library("tidyverse")
+
+data <- read.csv("C:/Users/Aslam Computer/Pictures/Camera Roll/bikes.csv")
+head(data)
+
+```
+
+```{r}
+ret<-data$rentals
+head(ret)
+```
+
+```{r}
+colnames(data)
+
+```
+```{r}
+correlations_matrix1<-cor(data$rentals,data[,c("temperature","realfeel", "humidity",   "windspeed")])
+correlations_matrix1
+```
+```{r}
+correlations_matrix<-cor(data[,c("temperature","realfeel", "humidity",   "windspeed","rentals")])
+correlations_matrix
+```
+```{r}
+library(corrplot)
+corrplot(correlations_matrix, method="color")
+```
+
+```{r}
+scatter.smooth(data$temperature,data$rentals)
+scatter.smooth(data$realfeel,data$rentals)
+scatter.smooth(data$windspeed,data$rentals)
+scatter.smooth(data$humidity,data$rentals)
+
+
+
+
+
+
+```
+
+Dependent variable on Y axis and independent on X axis.
+
+
+```{r}
+for (col in c("temperature", "realfeel", "humidity", "windspeed")) {
+  model <- lm(rentals ~ ., data = data[, c("rentals", col)])
+  print(summary(model))}
+```
+
+
+Above all analysis show that tempreture and realfeel has realfeel has strong relationship with rentals , also other variable has relation but there relation is not strorng.
+
+
+# Question no 2
+##2-If there is a relationship, how strong is it? Is the relationship linear?
+above all analysis show that teampreture and realfeel have strong relationship, and teampreture and realfeelhave linear realtion ship with reatals.And Variable have negative relation.
+
+```{r}
+scatter.smooth(data$temperature,data$rentals)
+scatter.smooth(data$realfeel,data$rentals)
+```
+
+
+```{r}
+library(corrplot)
+corrplot(model)
+```
+
+
+#Question No 3
+## -If the relationship is linear, how well can we quantify the effect of a variable on the number of bike rentals?
+
+
+##For the variable "temperature," the coefficient is 78.495.
+This means that, according to the model, for every one-unit increase in temperature, the number of bike rentals is estimated to increase by 78.495 units, holding other factors constant.
+SO the effect of the "temperature" variable on the number of bike rentals is quantified by this coefficient
+
+
+##For the variable "RealFeel"  the coefficient for the "realfeel" variable is 63.147.
+This coefficient indicates that, according to the model, for every one-unit increase in the "realfeel" variable, the number of bike rentals is estimated to increase by 63.147 units, assuming all other variables are held constant
+
+##For the variable "Windspeed"  the coefficient for the "windspeed" variable is -140.83.
+This coefficient represents the estimated change in the number of bike rentals for a one-unit increase in "windspeed," assuming all other variables remain constant. The negative sign of the coefficient indicates that, according to the model, as "windspeed" increases, the number of bike rentals is estimated to decrease by approximately 140.83 units.
+
+
+##For the variable "Humidity"  "humidity" variable is -1369.1.
+that the linear relationship with humidity explains only a small fraction of the variability in bike rentals
+
+
+# Question No 4
+## 4-How accurately can we predict the number of bike rentals given future values for each of the relevant variables?
+
+The accuracy of predicting the number of bike rentals based on future values of relevant variables can be assessed by considering the model's performance metrics, such as the residual standard error (RSE) and the R^2 value.
+
+
+
+```{r}
+summary(model)
+```
+
+```{r}
+
+```
+
+
